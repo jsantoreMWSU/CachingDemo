@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+var lookupTable [256]int
+
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("calculate which fibonacci number:")
@@ -29,7 +31,12 @@ func fib(num int) int {
 	if num <= 2 {
 		return 1
 	}
-	return fib(num-1) + fib(num-2)
+	if lookupTable[num] != 0 {
+		return lookupTable[num]
+	}
+	result := fib(num-1) + fib(num-2)
+	lookupTable[num] = result
+	return result
 }
 
 func fact(num int) int64 {
